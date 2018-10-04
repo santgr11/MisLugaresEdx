@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -15,10 +17,12 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
 
 public class VistaLugarActivity extends AppCompatActivity {
+    private Uri uriFoto;
     private ImageView imageView;
     final static int RESULTADO_GALERIA= 2;
     final static int RESULTADO_FOTO= 3;
@@ -152,11 +156,19 @@ public class VistaLugarActivity extends AppCompatActivity {
             actualizarVistas();
             findViewById(R.id.scrollView1).invalidate();
         } else if (requestCode == RESULTADO_GALERIA) {
-        if (resultCode == Activity.RESULT_OK) {
-            lugar.setFoto(data.getDataString());
+            if (resultCode == Activity.RESULT_OK) {
+                lugar.setFoto(data.getDataString());
+                ponerFoto(imageView, lugar.getFoto());
+            } else {
+            Toast.makeText(this, "Foto no cargada",Toast.LENGTH_LONG).show();
+            }
+        } else if (requestCode == RESULTADO_FOTO) {
+        if (resultCode == Activity.RESULT_OK
+                && lugar!=null && uriFoto!=null) {
+            lugar.setFoto(uriFoto.toString());
             ponerFoto(imageView, lugar.getFoto());
         } else {
-            Toast.makeText(this, "Foto no cargada",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error en captura", Toast.LENGTH_LONG).show();
         }
     }
     }
@@ -195,5 +207,14 @@ public class VistaLugarActivity extends AppCompatActivity {
         } else{
             imageView.setImageBitmap(null);
         }
+    }
+
+    public void tomarFoto(View view) {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        uriFoto = Uri.fromFile(new File(
+                Environment.getExternalStorageDirectory() + File.separator
+                        + "img_" + (System.currentTimeMillis() / 1000) + ".jpg"));
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uriFoto);
+        startActivityForResult(intent, RESULTADO_FOTO);
     }
 }
