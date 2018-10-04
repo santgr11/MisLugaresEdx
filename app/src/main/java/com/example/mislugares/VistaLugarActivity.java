@@ -1,5 +1,6 @@
 package com.example.mislugares;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,20 +13,26 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Date;
 
 public class VistaLugarActivity extends AppCompatActivity {
+    private ImageView imageView;
+    final static int RESULTADO_GALERIA= 2;
+    final static int RESULTADO_FOTO= 3;
     private long id;
     private Lugar lugar;
     final static int RESULTADO_EDITAR = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vista_lugar);
         Bundle extras = getIntent().getExtras();
         id = extras.getLong("id", -1);
+        imageView = (ImageView) findViewById(R.id.foto);
         actualizarVistas();
 
     }
@@ -144,7 +151,14 @@ public class VistaLugarActivity extends AppCompatActivity {
         if (requestCode == RESULTADO_EDITAR) {
             actualizarVistas();
             findViewById(R.id.scrollView1).invalidate();
+        } else if (requestCode == RESULTADO_GALERIA) {
+        if (resultCode == Activity.RESULT_OK) {
+            lugar.setFoto(data.getDataString());
+            ponerFoto(imageView, lugar.getFoto());
+        } else {
+            Toast.makeText(this, "Foto no cargada",Toast.LENGTH_LONG).show();
         }
+    }
     }
 
     public void verMapa(View view) {
@@ -167,5 +181,19 @@ public class VistaLugarActivity extends AppCompatActivity {
     public void pgWeb(View view) {
         startActivity(new Intent(Intent.ACTION_VIEW,
                 Uri.parse(lugar.getUrl())));
+    }
+
+    public void galeria(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, RESULTADO_GALERIA);
+    }
+
+    protected void ponerFoto(ImageView imageView, String uri) {
+        if (uri != null&& !uri.isEmpty() && !uri.equals("null")) {
+            imageView.setImageURI(Uri.parse(uri));
+        } else{
+            imageView.setImageBitmap(null);
+        }
     }
 }

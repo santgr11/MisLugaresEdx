@@ -174,7 +174,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:contentDescription="logo galería"
-                    android:src="@android:drawable/ic_menu_gallery" />
+                    android:src="@android:drawable/ic_menu_gallery"
+                    android:onClick="galeria"/>
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>
