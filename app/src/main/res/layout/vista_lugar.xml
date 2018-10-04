@@ -36,7 +36,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:onClick="verMapa">
             <ImageView
                 android:id="@+id/logo_direccion"
                 android:layout_width="40dp"
@@ -54,7 +55,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:onClick="llamadaTelefono">
             <ImageView
                 android:id="@+id/logo_telefono"
                 android:layout_width="40dp"
@@ -73,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:onClick="verMapa">
+            android:onClick="pgWeb">
             <ImageView
                 android:id="@+id/logo_url"
                 android:layout_width="40dp"
