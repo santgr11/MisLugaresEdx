@@ -1,0 +1,24 @@
+<resources>
+
+    <string name="action_settings">Settings</string>
+
+    //Botones de accion
+    <string name="accion_mostrar">Mostrar lugares</string>
+    <string name="accion_preferencias">Preferencias</string>
+    <string name="accion_acerca_de">Acerca de</string>
+    <string name="accion_salir">Salir</string>
+
+    //Layout edicion_lugar
+    <string name="edicion_nombre">Nombre: </string>
+    <string name="edicion_nombre_hint">algo que identifique el lugar</string>
+    <string name="edicion_tipo">Tipo: </string>
+    <string name="edicion_direccion">Dirección: </string>
+    <string name="edicion_direccion_hint">dirección del lugar</string>
+    <string name="edicion_telefono">Teléfono: </string>
+    <string name="edicion_telefono_hint">telefono para contactar</string>
+    <string name="edicion_url">Url: </string>
+    <string name="edicion_url_hint">página web</string>
+    <string name="edicion_comentario">Comentario: </string>
+    <string name="edicion_comentario_hint">introduce tus notas</string>
+    <string name="app_name">Mis Lugares</string>
+</resources>

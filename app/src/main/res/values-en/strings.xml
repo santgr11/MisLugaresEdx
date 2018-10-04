@@ -1,0 +1,24 @@
+<resources>
+
+    <string name="action_settings">Settings</string>
+
+    //Botones de accion
+    <string name="accion_mostrar">Show places</string>
+    <string name="accion_preferencias">Settings</string>
+    <string name="accion_acerca_de">About</string>
+    <string name="accion_salir">Exit</string>
+
+    //Layout edicion_lugar
+    <string name="edicion_nombre">Name: </string>
+    <string name="edicion_nombre_hint">Something to identify the place</string>
+    <string name="edicion_tipo">Type: </string>
+    <string name="edicion_direccion">Adress: </string>
+    <string name="edicion_direccion_hint">Place adress</string>
+    <string name="edicion_telefono">Phone: </string>
+    <string name="edicion_telefono_hint">Phone to contact</string>
+    <string name="edicion_url">Url: </string>
+    <string name="edicion_url_hint">website</string>
+    <string name="edicion_comentario">Comment: </string>
+    <string name="edicion_comentario_hint">Write your notes</string>
+    <string name="app_name">My Places</string>
+</resources>
