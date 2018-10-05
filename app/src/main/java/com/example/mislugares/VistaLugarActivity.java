@@ -1,15 +1,19 @@
 package com.example.mislugares;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -26,6 +30,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 public class VistaLugarActivity extends AppCompatActivity {
+    private static final int SOLICITUD_PERMISO_READ_EXTERNAL_STORAGE = 0;
     private Uri uriFoto;
     private ImageView imageView;
     final static int RESULTADO_GALERIA= 2;
@@ -200,9 +205,17 @@ public class VistaLugarActivity extends AppCompatActivity {
     }
 
     public void galeria(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, RESULTADO_GALERIA);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, RESULTADO_GALERIA);
+        } else {
+        solicitarPermiso(Manifest.permission.WRITE_CALL_LOG, "Sin el permiso"+
+                        " de acceso al almacenamiento no puedo acceder a la galeria",
+                SOLICITUD_PERMISO_READ_EXTERNAL_STORAGE, this);
+    }
     }
 
     protected void ponerFoto(ImageView imageView, String uri) {
@@ -245,6 +258,25 @@ public class VistaLugarActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void solicitarPermiso(final String permiso, String
+            justificacion, final int requestCode, final Activity actividad) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(actividad,
+                permiso)){
+            new AlertDialog.Builder(actividad)
+                    .setTitle("Solicitud de permiso")
+                    .setMessage(justificacion)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            ActivityCompat.requestPermissions(actividad,
+                                    new String[]{permiso}, requestCode);
+                        }})
+                    .show();
+        } else {
+            ActivityCompat.requestPermissions(actividad,
+                    new String[]{permiso}, requestCode);
         }
     }
 }
