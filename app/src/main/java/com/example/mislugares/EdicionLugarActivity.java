@@ -34,7 +34,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         id = extras.getLong("id", -1);
-        lugar = MainActivity.lugares.elemento((int) id);
+        lugar= MainActivity.adaptador.lugarPosicion((int) id);
 
         tipo = (Spinner) findViewById(R.id.tipo);
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,

@@ -97,7 +97,7 @@ public class VistaLugarActivity extends AppCompatActivity {
     }
 
     public void actualizarVistas() {
-        lugar = MainActivity.lugares.elemento((int) id);
+        lugar= MainActivity.adaptador.lugarPosicion((int) id);
         TextView nombre = (TextView) findViewById(R.id.nombre);
         nombre.setText(lugar.getNombre());
         ImageView logo_tipo = (ImageView) findViewById(R.id.logo_tipo);

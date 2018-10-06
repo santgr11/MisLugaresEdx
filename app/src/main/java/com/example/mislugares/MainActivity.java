@@ -30,9 +30,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
-    public static Lugares lugares = new LugaresVector();
+    public static LugaresBD lugares;
     private RecyclerView recyclerView;
-    public AdaptadorLugares adaptador;
+    public static AdaptadorLugaresBD adaptador;
     private RecyclerView.LayoutManager layoutManager;
     private LocationManager manejador;
     private Location mejorLocaliz;
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        lugares = new LugaresBD(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         });
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        adaptador = new AdaptadorLugares(this, lugares);
+        adaptador = new AdaptadorLugaresBD(this, lugares, lugares.extraeCursor());
         recyclerView.setAdapter(adaptador);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -133,6 +134,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if  (id == R.id.action_settings) {
             lanzarPreferencias(null);
             return true;
+        }
+        if (id==R.id.menu_mapa) {
+            Intent intent = new Intent(this, MapaActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
